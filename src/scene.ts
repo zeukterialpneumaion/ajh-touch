@@ -260,12 +260,12 @@ function init() {
         console.log(event);
         event.stopPropagation();
 
-        document.querySelector('#title .log')!.innerHTML =
-          '<span style="color: #ff8800">' +
-          event.target.name +
-          ' – mouseenter, distance: ' +
-          event.distance +
-          '</span><br/>';
+        // document.querySelector('#title .log')!.innerHTML =
+        //   '<span style="color: #ff8800">' +
+        //   event.target.name +
+        //   ' – mouseenter, distance: ' +
+        //   event.distance +
+        //   '</span><br/>';
 
         ((event.target as Mesh).material as MeshMatcapMaterial).color.set(0xff8800);
 
@@ -290,12 +290,12 @@ function init() {
         event.stopPropagation();
         //event.preventDefault();
 
-        document.querySelector('#title .log')!.innerHTML =
-          '<span style="color: #ff0000">' +
-          event.target.name +
-          ' – mouseover, distance: ' +
-          event.distance +
-          '</span><br/>';
+        // document.querySelector('#title .log')!.innerHTML =
+        //   '<span style="color: #ff0000">' +
+        //   event.target.name +
+        //   ' – mouseover, distance: ' +
+        //   event.distance +
+        //   '</span><br/>';
 
         ((event.target as Mesh).material as MeshMatcapMaterial)
         .color.set(0xff0000);
@@ -321,12 +321,13 @@ function init() {
        //  event.preventDefault();
        
        selectedMeshes.push((event.target as Mesh)); 
-        document.querySelector('#title .log')!.innerHTML =
-          '<span style="color: #0000ff">' +
-          event.target.name +
-          ' – mousedown, distance: ' +
-          event.distance +
-          '</span><br/>';
+
+        // document.querySelector('#title .log')!.innerHTML =
+        //   '<span style="color: #0000ff">' +
+        //   event.target.name +
+        //   ' – mousedown, distance: ' +
+        //   event.distance +
+        //   '</span><br/>';
 
         ((event.target as Mesh).material as MeshMatcapMaterial).color.set(0x0000ff);
       });
@@ -353,11 +354,11 @@ function init() {
         console.log(event);
         event.stopPropagation();
 
-        document.querySelector('#title .log')!.innerHTML =
-          event.target.name +
-          ' – click, distance: ' +
-          event.distance +
-          '<br/>';
+        // document.querySelector('#title .log')!.innerHTML =
+        //   event.target.name +
+        //   ' – click, distance: ' +
+        //   event.distance +
+        //   '<br/>';
       });
 
       interactionManager.add(child);

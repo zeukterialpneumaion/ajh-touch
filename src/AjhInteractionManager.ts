@@ -23,11 +23,13 @@ export class InteractiveEvent {
   coords: Vector2 = new Vector2(0, 0);
   distance: number = 0;
   intersected: boolean = false;
+  id : number = 0;
 
   constructor(type: string, originalEvent: Event | null = null) {
     this.cancelBubble = false;
     this.type = type;
     this.originalEvent = originalEvent;
+    this.id = 0;
   }
   stopPropagation() {
     this.cancelBubble = true;
@@ -63,11 +65,11 @@ export class InteractionManager {
   bindEventsOnBodyElement: boolean;
   autoAdd: boolean;
   scene: Scene | null;
-  mouse: Vector2;
+  mouses: Array<Vector2>;
   supportsPointerEvents: boolean;
   interactiveObjects: InteractiveObject[];
   closestObject: InteractiveObject | null;
-  raycaster: Raycaster;
+  raycasters: Array<Raycaster>;
   treatTouchEventsAsMouseEvents: boolean;
 
   constructor(
@@ -112,14 +114,61 @@ export class InteractionManager {
       );
     }
 
-    this.mouse = new Vector2(-1, 1); // top left default position
+    // array of mouse coordinates
+    this.mouses 
+    = 
+    [
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 1)
+
+    ]; // top left default position
 
     this.supportsPointerEvents = !!window.PointerEvent;
 
     this.interactiveObjects = [];
     this.closestObject = null;
 
-    this.raycaster = new Raycaster();
+    //array of raycasters
+    this.raycasters 
+    = 
+    [ 
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster(),
+
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster(),
+
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster(),
+
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster(),
+      new Raycaster()
+    ];
 
     domElement.addEventListener('click', this.onMouseClick);
 
@@ -233,10 +282,19 @@ export class InteractionManager {
   };
 
   update = () => {
-    this.raycaster.setFromCamera(this.mouse, this.camera);
+
+    for (let index = 0; index < this.raycasters.length; index++) {
+      //const element = array[index];
+      this.raycasters[index]
+      .setFromCamera(
+        this.mouses[index], 
+        this.camera
+      );
+    }
+    
 
     this.interactiveObjects.forEach((object) => {
-      if (object.target) this.checkIntersection(object);
+      if (object.target) this.checkIntersection(object,0);
     });
 
     this.interactiveObjects.sort(function (a, b) {
@@ -266,6 +324,7 @@ export class InteractionManager {
         this.dispatch(object, eventLeave);
       }
     });
+
     let eventEnter: InteractiveEvent;
     this.interactiveObjects.forEach((object) => {
       if (object.intersected && !object.wasIntersected) {
@@ -275,10 +334,14 @@ export class InteractionManager {
         this.dispatch(object, eventEnter);
       }
     });
+
+    
   };
 
-  checkIntersection = (object: InteractiveObject) => {
-    const intersects = this.raycaster.intersectObjects([object.target], true);
+  /**TODO */
+  checkIntersection = (object: InteractiveObject, id:number) => {
+    const intersects 
+    = this.raycasters[id].intersectObjects([object.target], true);
 
     object.wasIntersected = object.intersected;
 
@@ -299,7 +362,11 @@ export class InteractionManager {
   onDocumentMouseMove = (mouseEvent: MouseEvent) => {
     // event.preventDefault();
 
-    this.mapPositionToPoint(this.mouse, mouseEvent.clientX, mouseEvent.clientY);
+    this.mapPositionToPoint(
+      this.mouses[0], 
+      mouseEvent.clientX, 
+      mouseEvent.clientY
+    );
 
     const event = new InteractiveEvent('mousemove', mouseEvent);
 
@@ -310,9 +377,9 @@ export class InteractionManager {
 
   onDocumentPointerMove = (pointerEvent: PointerEvent) => {
     // event.preventDefault();
-
+   
     this.mapPositionToPoint(
-      this.mouse,
+      this.mouses[pointerEvent.pointerId],
       pointerEvent.clientX,
       pointerEvent.clientY
     );
@@ -328,11 +395,14 @@ export class InteractionManager {
     // event.preventDefault();
 
     if (touchEvent.touches.length > 0) {
-      this.mapPositionToPoint(
-        this.mouse,
-        touchEvent.touches[0].clientX,
-        touchEvent.touches[0].clientY
-      );
+
+      for (let index = 0; index < touchEvent.touches.length; index++) {
+        this.mapPositionToPoint(
+          this.mouses[index],
+          touchEvent.touches[index].clientX,
+          touchEvent.touches[index].clientY
+        );
+      }
     }
 
     const event = new InteractiveEvent(
@@ -358,7 +428,7 @@ export class InteractionManager {
   };
 
   onMouseDown = (mouseEvent: MouseEvent) => {
-    this.mapPositionToPoint(this.mouse, mouseEvent.clientX, mouseEvent.clientY);
+    this.mapPositionToPoint(this.mouses[0], mouseEvent.clientX, mouseEvent.clientY);
 
     this.update();
 
@@ -373,7 +443,7 @@ export class InteractionManager {
 
   onPointerDown = (pointerEvent: PointerEvent) => {
     this.mapPositionToPoint(
-      this.mouse,
+      this.mouses[pointerEvent.pointerId],
       pointerEvent.clientX,
       pointerEvent.clientY
     );
@@ -390,26 +460,35 @@ export class InteractionManager {
   };
 
   onTouchStart = (touchEvent: TouchEvent) => {
-    if (touchEvent.touches.length > 0) {
-      this.mapPositionToPoint(
-        this.mouse,
-        touchEvent.touches[0].clientX,
-        touchEvent.touches[0].clientY
-      );
+
+      if (touchEvent.touches.length > 0) {
+
+        for (let index = 0; index < touchEvent.touches.length; index++){ 
+            
+          this.mapPositionToPoint(
+            this.mouses[index],
+            touchEvent.touches[index].clientX,
+            touchEvent.touches[index].clientY
+          );
+          
+          this.update();
+          
+          const event = new InteractiveEvent(
+            this.treatTouchEventsAsMouseEvents ? 'mousedown' : 'touchstart',
+            touchEvent
+          );
+
+          this.interactiveObjects.forEach((object) => {
+            if (object.intersected) {
+              this.dispatch(object, event);
+            }
+          });
+      }
+      
     }
 
-    this.update();
 
-    const event = new InteractiveEvent(
-      this.treatTouchEventsAsMouseEvents ? 'mousedown' : 'touchstart',
-      touchEvent
-    );
-
-    this.interactiveObjects.forEach((object) => {
-      if (object.intersected) {
-        this.dispatch(object, event);
-      }
-    });
+    
   };
 
   onMouseUp = (mouseEvent: MouseEvent) => {
@@ -430,29 +509,49 @@ export class InteractionManager {
 
   onTouchEnd = (touchEvent: TouchEvent) => {
     if (touchEvent.touches.length > 0) {
-      this.mapPositionToPoint(
-        this.mouse,
-        touchEvent.touches[0].clientX,
-        touchEvent.touches[0].clientY
-      );
+
+      
+      for (let index = 0; index < touchEvent.touches.length; index++){ 
+
+        this.mapPositionToPoint(
+          this.mouses[index],
+          touchEvent.touches[index].clientX,
+          touchEvent.touches[index].clientY
+        );
+
+        this.update();
+
+        const event = new InteractiveEvent(
+          this.treatTouchEventsAsMouseEvents ? 'mouseup' : 'touchend',
+          touchEvent
+        );
+    
+        this.interactiveObjects.forEach((object) => {
+          this.dispatch(object, event);
+        });
+
+      }
     }
 
-    this.update();
-
-    const event = new InteractiveEvent(
-      this.treatTouchEventsAsMouseEvents ? 'mouseup' : 'touchend',
-      touchEvent
-    );
-
-    this.interactiveObjects.forEach((object) => {
-      this.dispatch(object, event);
-    });
+   
   };
 
   dispatch = (object: InteractiveObject, event: any) => {
     // : InteractiveEvent) => {
     if (object.target && !event.cancelBubble) {
-      event.coords = this.mouse;
+        event.coords = this.mouses[0];
+      if(event.originalEvent instanceof PointerEvent == true){
+        event.coords = this.mouses[(event.originalEvent as PointerEvent).pointerId];
+      }
+      try {
+          if( event.originalEvent instanceof TouchEvent == true){
+             event.coords = this.mouses[(event.originalEvent as TouchEvent).touches.length];
+        }
+      } catch (error) {
+        
+      }
+     
+      
       event.distance = object.distance;
       event.intersected = object.intersected;
       object.target.dispatchEvent(event);

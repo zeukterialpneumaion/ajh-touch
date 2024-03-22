@@ -25,7 +25,6 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import AjhDisplayItem from "./AjhDisplay/AjhDisplayItem";
 import { InteractionManager } from "./AjhInteractionManager";
 import { toggleFullScreen } from "./helpers/fullscreen";
-import { resizeRendererToDisplaySize } from "./helpers/responsiveness";
 import "./style.css";
 
 const CANVAS_ID = "scene";
@@ -482,13 +481,13 @@ function animate() {
 
   // );
 
-  if (resizeRendererToDisplaySize(renderer)) {
+  // if (resizeRendererToDisplaySize(renderer)) {
 
-    const canvas = renderer.domElement;
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
+  //   const canvas = renderer.domElement;
+  //   camera.aspect = canvas.clientWidth / canvas.clientHeight;
+  //   camera.updateProjectionMatrix();
 
-  }
+  // }
 
   cameraControls.update();
 

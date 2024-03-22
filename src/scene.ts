@@ -24,7 +24,6 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
 import AjhDisplayItem from "./AjhDisplay/AjhDisplayItem";
 import { InteractionManager } from "./AjhInteractionManager";
-import * as animations from './helpers/animations';
 import { toggleFullScreen } from "./helpers/fullscreen";
 import { resizeRendererToDisplaySize } from "./helpers/responsiveness";
 import "./style.css";
@@ -466,22 +465,22 @@ function animate() {
 
   stats.update();
   
-  selectedMeshes.forEach(
+  // selectedMeshes.forEach(
 
-    function (item) {
+  //   function (item) {
 
-      if (animation.enabled && animation.play) {
+  //     if (animation.enabled && animation.play) {
 
-        animations.rotate(item, clock, Math.PI / 3);
-        animations.bounce(item, clock, 1, 0.5, 0.5);
+  //       animations.rotate(item, clock, Math.PI / 3);
+  //       animations.bounce(item, clock, 1, 0.5, 0.5);
 
-      }
+  //     }
 
      
 
-    }
+  //   }
 
-  );
+  // );
 
   if (resizeRendererToDisplaySize(renderer)) {
 

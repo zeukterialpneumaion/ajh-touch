@@ -231,10 +231,7 @@ function init() {
       child.addEventListener('mouseenter', (event : any ) => {
         console.log(event);
 
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
-        selectedMeshes.splice(foundIndex,1);
+        
         selectedMeshes.push((event.target as Mesh)); 
 
         event.stopPropagation();
@@ -276,6 +273,11 @@ function init() {
       child.addEventListener('mouseleave', (event : any) => {
         console.log(event);
 
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+        selectedMeshes.splice(foundIndex,1);
+
         InformationWindow.updateAllFields(
 
           event.target.name
@@ -310,12 +312,12 @@ function init() {
         event.stopPropagation();
         //event.preventDefault();
 
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
+        // let foundIndex = selectedMeshes.findIndex(
+        //   item => item == (event.target as Mesh)
+        // );
 
-        selectedMeshes.splice(foundIndex,1);
-        selectedMeshes.push((event.target as Mesh)); 
+        // selectedMeshes.splice(foundIndex,1);
+        //selectedMeshes.push((event.target as Mesh)); 
 
         
        InformationWindow.updateAllFields(
@@ -402,12 +404,13 @@ function init() {
           //  event.preventDefault();
           interactionManager.add(child);
 
-          let foundIndex 
-          = selectedMeshes.findIndex(
-            item => item == (event.target as Mesh)
-          );
+          // let foundIndex 
+          // = selectedMeshes.findIndex(
+          //   item => item == (event.target as Mesh)
+          // );
 
-          selectedMeshes.splice(foundIndex,1);
+          // selectedMeshes.splice(foundIndex,1);
+
           selectedMeshes.push((event.target as Mesh)); 
 
           InformationWindow.updateAllFields(
@@ -487,6 +490,12 @@ function init() {
         console.log(event);
         event.stopPropagation();
 
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+
+        selectedMeshes.splice(foundIndex,1);
+
         InformationWindow.updateAllFields(
 
           event.target.name
@@ -509,20 +518,11 @@ function init() {
   
          );
 
-        // document.querySelector('#title .log')!.innerHTML =
-        //   event.target.name +
-        //   ' – click, distance: ' +
-        //   event.distance +
-        //   '<br/>';
       });
 
       interactionManager.add(child);
     });
 
-
-    // cube = new Mesh(cubeGeometry, cubeMaterial);
-    // cube.castShadow = true;
-    // cube.position.y = 0.5;
 
     const planeGeometry = new PlaneGeometry(3, 3);
     const planeMaterial = new MeshLambertMaterial({

@@ -656,23 +656,40 @@ function animate() {
 
   stats.update();
   
-  interactionManager.returnArrayOfCurrentlySelectedItems().forEach(
+  // interactionManager.returnArrayOfCurrentlySelectedItems().forEach(
 
-    function (item) {
+  //   function (item) {
 
-      if (animation.enabled && animation.play) {
+  //     if (animation.enabled && animation.play) {
 
-        rotate(item.target, clock, Math.PI / 3);
-        bounce(item.target, clock, 1, 0.5, 0.5);
+  //       rotate(item.target, clock, Math.PI / 3);
+  //       bounce(item.target, clock, 1, 0.5, 0.5);
 
-      }
+  //     }
 
      
 
-    }
+  //   }
 
-  );
+  // );
+  
 
+    selectedMeshes.forEach(
+
+      function (item : Mesh) {
+
+        if (animation.enabled && animation.play) {
+
+          rotate(item, clock, Math.PI / 3);
+          bounce(item, clock, 1, 0.5, 0.5);
+
+        }
+
+      
+
+      }
+
+    );
   
 
    if (resizeRendererToDisplaySize(renderer)) {

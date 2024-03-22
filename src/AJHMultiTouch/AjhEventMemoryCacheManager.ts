@@ -47,7 +47,7 @@ export default class AjhEventMemoryCacheManager {
         
             if(foundEventMemoryCache == null){
                 
-                log("Error with cache handling", itemId);
+                this.logEvents.log("Error with cache handling", itemId);
             }
         
             return foundEventMemoryCache;

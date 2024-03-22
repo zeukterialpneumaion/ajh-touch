@@ -40,6 +40,11 @@ export default class AjhLog {
                 this.whereToDisplay.innerHTML += `${s}<br>`;
 
             }
+            else {
+
+                console.log(s);
+                
+            }
 
         }
 

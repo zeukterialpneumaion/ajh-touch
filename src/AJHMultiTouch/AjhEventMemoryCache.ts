@@ -48,7 +48,7 @@ export default class AjhEventMemoryCache {
 
                 this.logEvents.enableLog(true);
 
-                log("Error with cache handling", e);
+                this.logEvents.log("Error with cache handling", e);
 
             }
 

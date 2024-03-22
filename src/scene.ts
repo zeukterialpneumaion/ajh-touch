@@ -230,6 +230,13 @@ function init() {
       // mouseenter
       child.addEventListener('mouseenter', (event : any ) => {
         console.log(event);
+
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+        selectedMeshes.splice(foundIndex,1);
+        selectedMeshes.push((event.target as Mesh)); 
+
         event.stopPropagation();
 
         InformationWindow.updateAllFields(
@@ -303,6 +310,13 @@ function init() {
         event.stopPropagation();
         //event.preventDefault();
 
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+
+        selectedMeshes.splice(foundIndex,1);
+        selectedMeshes.push((event.target as Mesh)); 
+
         
        InformationWindow.updateAllFields(
 
@@ -342,6 +356,12 @@ function init() {
       child.addEventListener('mouseout', (event : any) => {
         console.log(event);
 
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+
+        selectedMeshes.splice(foundIndex,1);
+
         InformationWindow.updateAllFields(
 
           event.target.name
@@ -371,52 +391,67 @@ function init() {
       });
 
       // mousedown
-      child.addEventListener('mousedown', (event : any) => {
-        console.log(event);
-        event.stopPropagation();
-       //  event.preventDefault();
-       
-       selectedMeshes.push((event.target as Mesh)); 
+      child.addEventListener(
+        'mousedown', 
+        (event : any) => {
 
-       InformationWindow.updateAllFields(
+          console.log(event);
 
-        event.target.name
-          + 
-          " :: "
+          event.stopPropagation();
+
+          //  event.preventDefault();
+          interactionManager.add(child);
+
+          let foundIndex 
+          = selectedMeshes.findIndex(
+            item => item == (event.target as Mesh)
+          );
+
+          selectedMeshes.splice(foundIndex,1);
+          selectedMeshes.push((event.target as Mesh)); 
+
+          InformationWindow.updateAllFields(
+
+          event.target.name
+            + 
+            " :: "
+            +
+            event.target.id
+            + 
+            " :: "
+            +
+            interactionManager.returnArrayOfCurrentlySelectedItems().length
+            + 
+            " :: "
+            +
+            selectedMeshes.length, // title
+
+          " mousedown, distance: " 
           +
-          event.target.id
-          + 
-          " :: "
-          +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length
-          + 
-          " :: "
-          +
-          selectedMeshes.length, // title
+          event.distance, // data
 
-        " mousedown, distance: " 
-        +
-        event.distance, // data
+          event.target.uuid + " ajh." // message
 
-        event.target.uuid + " ajh." // message
+        );
 
-       );
+        ( (event.target as Mesh).material as MeshMatcapMaterial )
+          .color.set(0x0000ff);
+      
+      }
 
-        // document.querySelector('#title .log')!.innerHTML =
-        //   '<span style="color: #0000ff">' +
-        //   event.target.name +
-        //   ' – mousedown, distance: ' +
-        //   event.distance +
-        //   '</span><br/>';
-
-        ((event.target as Mesh).material as MeshMatcapMaterial).color.set(0x0000ff);
-
-      });
+    );
       
       // mouseup
       child.addEventListener('mouseup', (event : any) => {
 
         console.log(event);
+
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+
+        selectedMeshes.splice(foundIndex,1);
+        
 
         InformationWindow.updateAllFields(
 
@@ -439,12 +474,6 @@ function init() {
           event.target.uuid + " ajh." // message
   
          );
-
-
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
-        selectedMeshes.splice(foundIndex,1);
 
         if (event.intersected) {
           ((event.target as Mesh).material as MeshMatcapMaterial).color.set(0xff0000);

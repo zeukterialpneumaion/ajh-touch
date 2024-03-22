@@ -259,22 +259,22 @@ export class InteractionManager {
 
     if (this.bindEventsOnBodyElement) {
 
-    //  domElement.ownerDocument.addEventListener(
-    //    'mousemove',
-    //    this.onDocumentMouseMove
-    //  );
+     domElement.ownerDocument.addEventListener(
+       'mousemove',
+       this.onDocumentMouseMove
+     );
 
     } else {
 
-    //  domElement.addEventListener(
-     //   'mousemove', 
-    //    this.onDocumentMouseMove
-    //  );
+     domElement.addEventListener(
+       'mousemove', 
+       this.onDocumentMouseMove
+     );
 
     }
 
-   // domElement.addEventListener('mousedown', this.onMouseDown);
-    //domElement.addEventListener('mouseup', this.onMouseUp);
+   domElement.addEventListener('mousedown', this.onMouseDown);
+    domElement.addEventListener('mouseup', this.onMouseUp);
 
     domElement.addEventListener(
       'touchstart', 
@@ -347,22 +347,22 @@ export class InteractionManager {
 
     if (this.bindEventsOnBodyElement) {
 
-      // this.domElement.ownerDocument.removeEventListener(
-      //   'mousemove',
-      //   this.onDocumentMouseMove
-      // );
+      this.domElement.ownerDocument.removeEventListener(
+        'mousemove',
+        this.onDocumentMouseMove
+      );
 
     } else {
 
-      // this.domElement.removeEventListener(
-      //   'mousemove',
-      //   this.onDocumentMouseMove
-      // );
+      this.domElement.removeEventListener(
+        'mousemove',
+        this.onDocumentMouseMove
+      );
 
     };
 
-   // this.domElement.removeEventListener('mousedown', this.onMouseDown);
-   // this.domElement.removeEventListener('mouseup', this.onMouseUp);
+   this.domElement.removeEventListener('mousedown', this.onMouseDown);
+   this.domElement.removeEventListener('mouseup', this.onMouseUp);
     this.domElement.removeEventListener('touchstart', this.onTouchStart);
     this.domElement.removeEventListener('touchmove', this.onTouchMove);
     this.domElement.removeEventListener('touchend', this.onTouchEnd);

@@ -27,7 +27,6 @@ import { InteractionManager } from "./AjhInteractionManager";
 import { toggleFullScreen } from "./helpers/fullscreen";
 import { resizeRendererToDisplaySize } from "./helpers/responsiveness";
 
-import { bounce, rotate } from "./helpers/animations";
 import "./style.css";
 
 const CANVAS_ID = "scene";
@@ -594,22 +593,22 @@ function animate() {
 
   stats.update();
   
-  selectedMeshes.forEach(
+  // selectedMeshes.forEach(
 
-    function (item) {
+  //   function (item) {
 
-      if (animation.enabled && animation.play) {
+  //     if (animation.enabled && animation.play) {
 
-        rotate(item, clock, Math.PI / 3);
-        bounce(item, clock, 1, 0.5, 0.5);
+  //       rotate(item, clock, Math.PI / 3);
+  //       bounce(item, clock, 1, 0.5, 0.5);
 
-      }
+  //     }
 
      
 
-    }
+  //   }
 
-  );
+  // );
 
   
 

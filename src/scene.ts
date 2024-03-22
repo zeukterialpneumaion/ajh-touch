@@ -2,17 +2,13 @@ import GUI from "lil-gui";
 import {
   AmbientLight,
   AxesHelper,
-  BoxGeometry,
   Clock,
   Color,
   GridHelper,
   Group,
-  MathUtils,
   Mesh,
-  MeshBasicMaterial,
   MeshLambertMaterial,
   MeshMatcapMaterial,
-  MeshStandardMaterial,
   PCFSoftShadowMap,
   PerspectiveCamera,
   PlaneGeometry,
@@ -22,9 +18,11 @@ import {
   Vector3,
   WebGLRenderer
 } from "three";
+
 import { DragControls } from "three/examples/jsm/controls/DragControls";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
+import AjhDisplayItem from "./AjhDisplay/AjhDisplayItem";
 import { InteractionManager } from "./AjhInteractionManager";
 import * as animations from './helpers/animations';
 import { toggleFullScreen } from "./helpers/fullscreen";
@@ -114,22 +112,22 @@ function init() {
   // ===== 💡 LIGHTS =====
   {
 
-    ambientLight = new AmbientLight("white", 0.4);
-    pointLight = new PointLight("white", 20, 100);
+    // ambientLight = new AmbientLight("white", 0.4);
+    // pointLight = new PointLight("white", 20, 100);
 
-    pointLight.position.set(-2, 2, 2);
+    // pointLight.position.set(-2, 2, 2);
 
-    pointLight.castShadow = true;
-    pointLight.shadow.radius = 4;
+    // pointLight.castShadow = true;
+    // pointLight.shadow.radius = 4;
 
-    pointLight.shadow.camera.near = 0.5;
-    pointLight.shadow.camera.far = 4000;
+    // pointLight.shadow.camera.near = 0.5;
+    // pointLight.shadow.camera.far = 4000;
 
-    pointLight.shadow.mapSize.width = 2048;
-    pointLight.shadow.mapSize.height = 2048;
+    // pointLight.shadow.mapSize.width = 2048;
+    // pointLight.shadow.mapSize.height = 2048;
 
-    scene.add(ambientLight);
-    scene.add(pointLight);
+    // scene.add(ambientLight);
+    // scene.add(pointLight);
 
   }
 
@@ -142,6 +140,7 @@ function init() {
 
   // ===== 🕹️ CONTROLS =====
   {
+
     cameraControls = new OrbitControls(camera, canvas);
     cameraControls.target =new Vector3(0,0,0);// cube.position.clone();
     cameraControls.enableDamping = true;
@@ -196,55 +195,23 @@ function init() {
   
   // ===== 📦 OBJECTS =====
   {
-
-    const sideLength = 1;
-
-    const cubeGeometry 
-    = new BoxGeometry(sideLength, sideLength, sideLength);
-
-    const cubeMaterial 
-    = new MeshStandardMaterial({
-      color: "#f69f1f",
-      metalness: 0.5,
-      roughness: 0.7,
-    });
-
-    const basicMaterial 
-    = new MeshBasicMaterial({
-      color: "#f69f1f",
-      //metalness: 0.5,
-     // roughness: 0.7,
-    });
-
-    const matcapMaterial 
-    = new MeshMatcapMaterial({
-      color: "#f69f1f",
-      //metalness: 0.5,
-     // roughness: 0.7,
-    });
-    
-    
     
     for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
 
       for (let colIndex = 0; colIndex < cols; colIndex++) {
 
-      const element 
-      = new Mesh(cubeGeometry.clone(), matcapMaterial.clone());
+        const element 
+        = new AjhDisplayItem();
 
-      (element as Mesh).name = MathUtils.randInt(0, 0xffffff).toString();
-      (element.material as MeshMatcapMaterial).color 
-      = new Color( +element.name );
+        element.body.position.z = 0.75 + ((rowIndex - ( rows / 2 ) )*1.5);
+        element.body.position.x = 0.75 + ((colIndex - ( cols / 2 ) )*1.5);
+        
 
-      element.castShadow = true;
-      element.position.z = 0.75 + ((rowIndex - ( rows / 2 ) )*1.5);
-      element.position.x = 0.75 + ((colIndex - ( cols / 2 ) )*1.5);
-      element.position.y = 0.5;
-
-      arrayOfItems.push( element );
-      groupOfMeshes.add( element );
+        arrayOfItems.push( element.body );
+        groupOfMeshes.add( element.body );
       
       }
+      
     }
 
     scene.add(groupOfMeshes);
@@ -396,9 +363,9 @@ function init() {
     axesHelper.visible = false;
     scene.add(axesHelper);
 
-    pointLightHelper = new PointLightHelper(pointLight, undefined, "orange");
-    pointLightHelper.visible = false;
-    scene.add(pointLightHelper);
+    // pointLightHelper = new PointLightHelper(pointLight, undefined, "orange");
+    // pointLightHelper.visible = false;
+    // scene.add(pointLightHelper);
 
     const gridHelper = new GridHelper(20, 20, "teal", "darkgray");
     gridHelper.position.y = -0.01;

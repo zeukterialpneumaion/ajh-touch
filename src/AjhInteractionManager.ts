@@ -125,7 +125,7 @@ export class InteractionManager {
 
   supportsPointerEvents: boolean;
 
-  interactiveObjects: Array<Array<InteractiveObject>> = new Array<Array<InteractiveObject>>;
+  interactiveObjects: Array<InteractiveObject> = new Array<InteractiveObject>;
 
   closestObjects: Array<InteractiveObject | null> = new Array<InteractiveObject | null>();
 
@@ -222,7 +222,7 @@ export class InteractionManager {
       this.raycasterInstances.push(new Raycaster()); 
 
       // create empty interactive objects array
-      this.interactiveObjects.push( new Array<InteractiveObject>() ); 
+      //this.interactiveObjects.push( new Array<InteractiveObject>() ); 
       
       this.closestObjects.push( null );
     }
@@ -232,7 +232,7 @@ export class InteractionManager {
     //this.interactiveObjects = [];
     this.closestObjects[0] = null;
 
-    domElement.addEventListener('click', this.onMouseClick);
+   // domElement.addEventListener('click', this.onMouseClick);
 
     if (this.supportsPointerEvents) {
 
@@ -259,22 +259,22 @@ export class InteractionManager {
 
     if (this.bindEventsOnBodyElement) {
 
-      domElement.ownerDocument.addEventListener(
-        'mousemove',
-        this.onDocumentMouseMove
-      );
+    //  domElement.ownerDocument.addEventListener(
+    //    'mousemove',
+    //    this.onDocumentMouseMove
+    //  );
 
     } else {
 
-      domElement.addEventListener(
-        'mousemove', 
-        this.onDocumentMouseMove
-      );
+    //  domElement.addEventListener(
+     //   'mousemove', 
+    //    this.onDocumentMouseMove
+    //  );
 
     }
 
-    domElement.addEventListener('mousedown', this.onMouseDown);
-    domElement.addEventListener('mouseup', this.onMouseUp);
+   // domElement.addEventListener('mousedown', this.onMouseDown);
+    //domElement.addEventListener('mouseup', this.onMouseUp);
 
     domElement.addEventListener(
       'touchstart', 
@@ -297,7 +297,7 @@ export class InteractionManager {
         passive: true,
       });
 
-    this.treatTouchEventsAsMouseEvents = true;
+    this.treatTouchEventsAsMouseEvents = false;
 
   }
 
@@ -347,22 +347,22 @@ export class InteractionManager {
 
     if (this.bindEventsOnBodyElement) {
 
-      this.domElement.ownerDocument.removeEventListener(
-        'mousemove',
-        this.onDocumentMouseMove
-      );
+      // this.domElement.ownerDocument.removeEventListener(
+      //   'mousemove',
+      //   this.onDocumentMouseMove
+      // );
 
     } else {
 
-      this.domElement.removeEventListener(
-        'mousemove',
-        this.onDocumentMouseMove
-      );
+      // this.domElement.removeEventListener(
+      //   'mousemove',
+      //   this.onDocumentMouseMove
+      // );
 
     };
 
-    this.domElement.removeEventListener('mousedown', this.onMouseDown);
-    this.domElement.removeEventListener('mouseup', this.onMouseUp);
+   // this.domElement.removeEventListener('mousedown', this.onMouseDown);
+   // this.domElement.removeEventListener('mouseup', this.onMouseUp);
     this.domElement.removeEventListener('touchstart', this.onTouchStart);
     this.domElement.removeEventListener('touchmove', this.onTouchMove);
     this.domElement.removeEventListener('touchend', this.onTouchEnd);
@@ -380,7 +380,7 @@ export class InteractionManager {
   (object: Object3D, childNames: string[] = []) => {
 
     if (
-      object && !this.interactiveObjects[0].find((i) => i.target === object)
+      object && !this.interactiveObjects.find((i) => i.target === object)
     ) {
       
       if (childNames.length > 0) {
@@ -396,7 +396,7 @@ export class InteractionManager {
               const interactiveObject 
               = new InteractiveObject(o, name);
 
-              this.interactiveObjects[0].push(interactiveObject);
+              this.interactiveObjects.push(interactiveObject);
 
             }
 
@@ -410,7 +410,7 @@ export class InteractionManager {
         = 
         new InteractiveObject(object, object.name);
 
-        this.interactiveObjects[0].push(interactiveObject);
+        this.interactiveObjects.push(interactiveObject);
 
       }
     }
@@ -439,9 +439,9 @@ export class InteractionManager {
 
         if (child) {
 
-          this.interactiveObjects[0] 
+          this.interactiveObjects 
           = 
-          this.interactiveObjects[0].filter(
+          this.interactiveObjects.filter(
 
             (o) => o.target !== child
 
@@ -453,9 +453,9 @@ export class InteractionManager {
 
     } else {
 
-      this.interactiveObjects[0] 
+      this.interactiveObjects 
       = 
-      this.interactiveObjects[0].filter(
+      this.interactiveObjects.filter(
 
         (o) => o.target !== object
 
@@ -489,20 +489,20 @@ export class InteractionManager {
     }
     
 
-    this.interactiveObjects[0].forEach((object) => {
+    this.interactiveObjects.forEach((object) => {
 
       if (object.target) this.checkIntersection(object,0);
 
     });
 
-    this.interactiveObjects[0].sort(function (a, b) {
+    this.interactiveObjects.sort(function (a, b) {
 
       return a.distance - b.distance;
 
     });
 
     const newClosestObject =
-      this.interactiveObjects[0].find((object) => object.intersected) ?? null;
+      this.interactiveObjects.find((object) => object.intersected) ?? null;
 
     if (newClosestObject != this.closestObjects[0]) {
 
@@ -526,7 +526,7 @@ export class InteractionManager {
 
     let eventLeave: InteractiveEvent;
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
       (object) => {
 
         if (!object.intersected && object.wasIntersected) {
@@ -547,7 +547,7 @@ export class InteractionManager {
 
     let eventEnter: InteractiveEvent;
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
 
       (object) => {
 
@@ -632,7 +632,7 @@ export class InteractionManager {
 
     const event = new InteractiveEvent('mousemove', mouseEvent);
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
 
       (object) => {
 
@@ -665,7 +665,7 @@ export class InteractionManager {
 
     const event = new InteractiveEvent('pointermove', pointerEvent);
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
       (object) => {
 
         this.dispatch(object, event);
@@ -713,7 +713,7 @@ export class InteractionManager {
 
         );
 
-        this.interactiveObjects[0].forEach(
+        this.interactiveObjects.forEach(
           (object) => {
 
             this.dispatch(object, event);
@@ -739,7 +739,7 @@ export class InteractionManager {
 
     const event = new InteractiveEvent('click', mouseEvent);
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
 
       (object) => {
 
@@ -775,7 +775,7 @@ export class InteractionManager {
 
     const event = new InteractiveEvent('mousedown', mouseEvent);
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
 
       (object) => {
 
@@ -813,7 +813,7 @@ export class InteractionManager {
 
     const event = new InteractiveEvent('pointerdown', pointerEvent);
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
 
       (object) => {
 
@@ -835,9 +835,9 @@ export class InteractionManager {
  * */
 // =============================================================== //
 
-  onTouchStart 
-  = 
-  (touchEvent: TouchEvent) => {
+    onTouchStart 
+    = 
+    (touchEvent: TouchEvent) => {
 
       if (touchEvent.touches.length > 0) {
 
@@ -847,44 +847,44 @@ export class InteractionManager {
           index++
         ){ 
             
-          this.mapPositionToPoint(
+            this.mapPositionToPoint(
 
-            this.mouseInstances[index],
-            touchEvent.touches[index].clientX,
-            touchEvent.touches[index].clientY
+              this.mouseInstances[index],
+              touchEvent.touches[index].clientX,
+              touchEvent.touches[index].clientY
 
-          );
-          
-          this.update();
-          
-          const event 
-          = 
-          new InteractiveEvent(
+            );
+            
+            this.update();
+            
+            const event 
+            = 
+            new InteractiveEvent(
 
-            this.treatTouchEventsAsMouseEvents ? 'mousedown' : 'touchstart',
-            touchEvent
+              this.treatTouchEventsAsMouseEvents ? 'mousedown' : 'touchstart',
+              touchEvent
 
-          );
+            );
 
-          this.interactiveObjects[0].forEach(
+            this.interactiveObjects.forEach(
 
-            (object) => {
+              (object) => {
 
-              if (object.intersected) {
+                if (object.intersected) {
 
-                this.dispatch(object, event);
+                  this.dispatch(object, event);
+
+                }
 
               }
 
-            }
+            );
 
-          );
-
-      }
+          }
       
-    }
+        }
 
-  };
+    };
 
 // =============================================================== //
 /** 
@@ -898,7 +898,7 @@ export class InteractionManager {
 
     const event = new InteractiveEvent('mouseup', mouseEvent);
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
 
       (object) => {
 
@@ -922,7 +922,7 @@ export class InteractionManager {
 
     const event = new InteractiveEvent('pointerup', pointerEvent);
 
-    this.interactiveObjects[0].forEach(
+    this.interactiveObjects.forEach(
 
       (object) => {
 
@@ -972,7 +972,7 @@ export class InteractionManager {
 
         );
     
-        this.interactiveObjects[0].forEach(
+        this.interactiveObjects.forEach(
 
           (object) => {
 
@@ -1039,19 +1039,19 @@ export class InteractionManager {
  * */
 // =============================================================== //
 
-  mapPositionToPoint 
-  = 
-  (
-    point: Vector2, 
-    x: number, 
-    y: number
-  ) => {
+    mapPositionToPoint 
+    = 
+    (
+      point: Vector2, 
+      x: number, 
+      y: number
+    ) => {
 
-    const rect = this.renderer.domElement.getBoundingClientRect();
+      const rect = this.renderer.domElement.getBoundingClientRect();
 
-    point.x = ((x - rect.left) / rect.width) * 2 - 1;
-    point.y = -((y - rect.top) / rect.height) * 2 + 1;
+      point.x = ((x - rect.left) / rect.width) * 2 - 1;
+      point.y = -((y - rect.top) / rect.height) * 2 + 1;
 
-  };
+    };
 
 }

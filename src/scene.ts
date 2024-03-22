@@ -411,7 +411,7 @@ function init() {
 
           // selectedMeshes.splice(foundIndex,1);
 
-          selectedMeshes.push((event.target as Mesh)); 
+         // selectedMeshes.push((event.target as Mesh)); 
 
           InformationWindow.updateAllFields(
 
@@ -453,7 +453,7 @@ function init() {
           item => item == (event.target as Mesh)
         );
 
-        //selectedMeshes.splice(foundIndex,1);
+        selectedMeshes.splice(foundIndex,1);
         
 
         InformationWindow.updateAllFields(

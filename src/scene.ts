@@ -242,7 +242,12 @@ function init() {
           + 
           " :: "
           +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          + 
+          " :: "
+          +
+          selectedMeshes.length,
+          
           " mouseenter, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
@@ -274,7 +279,11 @@ function init() {
           + 
           " :: "
           +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
           " mouseleave, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
@@ -305,7 +314,11 @@ function init() {
         + 
         " :: "
         +
-        interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
+        interactionManager.returnArrayOfCurrentlySelectedItems().length
+        + 
+        " :: "
+        +
+        selectedMeshes.length, // title
         " mouseover, distance: " +  event.distance, // data
         event.target.uuid + " ajh." // message
 
@@ -339,8 +352,14 @@ function init() {
           + 
           " :: "
           +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+
           " mouseout, distance: " +  event.distance, // data
+
           event.target.uuid + " ajh." // message
   
          );
@@ -369,7 +388,11 @@ function init() {
           + 
           " :: "
           +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
 
         " mousedown, distance: " 
         +
@@ -405,8 +428,14 @@ function init() {
           + 
           " :: "
           +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+
           " mouseup, distance: " +  event.distance, // data
+
           event.target.uuid + " ajh." // message
   
          );
@@ -439,7 +468,11 @@ function init() {
           + 
           " :: "
           +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
 
           " click/mouse up, distance: " +  event.distance, // data
 

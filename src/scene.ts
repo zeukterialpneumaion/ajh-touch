@@ -9,7 +9,6 @@ import {
   Mesh,
   MeshLambertMaterial,
   MeshMatcapMaterial,
-  PCFSoftShadowMap,
   PerspectiveCamera,
   PlaneGeometry,
   PointLight,
@@ -23,8 +22,12 @@ import { DragControls } from "three/examples/jsm/controls/DragControls";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
 import AjhDisplayItem from "./AjhDisplay/AjhDisplayItem";
+import AjhInformationWindow from "./AjhInformationWindow";
 import { InteractionManager } from "./AjhInteractionManager";
 import { toggleFullScreen } from "./helpers/fullscreen";
+import { resizeRendererToDisplaySize } from "./helpers/responsiveness";
+
+import { bounce, rotate } from "./helpers/animations";
 import "./style.css";
 
 const CANVAS_ID = "scene";
@@ -47,6 +50,8 @@ let arrayOfItems : Array<Mesh> = new Array<Mesh>();
 let amountToAdd = 20;
 let selectedMeshes : Array<Mesh> = new Array<Mesh>();
 
+let InformationWindow:AjhInformationWindow = new AjhInformationWindow();
+
 //let AjhTouchEvents : AjhMultiTouch = new AjhMultiTouch();
 
 const animation = { enabled: true, play: true };
@@ -66,8 +71,8 @@ function init() {
     canvas = document.querySelector(`canvas#${CANVAS_ID}`)!;
     renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = PCFSoftShadowMap;
+    //renderer.shadowMap.enabled = true;
+   // renderer.shadowMap.type = PCFSoftShadowMap;
     scene = new Scene();
 
     camera = new PerspectiveCamera(
@@ -214,6 +219,8 @@ function init() {
 
     scene.add(groupOfMeshes);
 
+    ////NICE COLOUR::: hex :: "329758" ajh.
+
     // arrayOfItems.forEach(element => {
     //    scene.add(element as Mesh);
     // });
@@ -224,6 +231,22 @@ function init() {
       child.addEventListener('mouseenter', (event : any ) => {
         console.log(event);
         event.stopPropagation();
+
+        InformationWindow.updateAllFields(
+
+          event.target.name
+          + 
+          " :: "
+          +
+          event.target.id
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+          " mouseenter, distance: " +  event.distance, // data
+          event.target.uuid + " ajh." // message
+  
+         );
 
         // document.querySelector('#title .log')!.innerHTML =
         //   '<span style="color: #ff8800">' +
@@ -238,8 +261,24 @@ function init() {
       });
 
       // mouseleave
-      child.addEventListener('mouseleave', (event) => {
+      child.addEventListener('mouseleave', (event : any) => {
         console.log(event);
+
+        InformationWindow.updateAllFields(
+
+          event.target.name
+          + 
+          " :: "
+          +
+          event.target.id
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+          " mouseleave, distance: " +  event.distance, // data
+          event.target.uuid + " ajh." // message
+  
+         );
         
 
         ((event.target as Mesh).material as MeshMatcapMaterial)
@@ -254,6 +293,23 @@ function init() {
         console.log(event);
         event.stopPropagation();
         //event.preventDefault();
+
+        
+       InformationWindow.updateAllFields(
+
+        event.target.name
+        + 
+        " :: "
+        +
+        event.target.id
+        + 
+        " :: "
+        +
+        selectedMeshes.length, // title
+        " mouseover, distance: " +  event.distance, // data
+        event.target.uuid + " ajh." // message
+
+       );
 
         // document.querySelector('#title .log')!.innerHTML =
         //   '<span style="color: #ff0000">' +
@@ -270,8 +326,24 @@ function init() {
       });
 
       // mouseout
-      child.addEventListener('mouseout', (event) => {
+      child.addEventListener('mouseout', (event : any) => {
         console.log(event);
+
+        InformationWindow.updateAllFields(
+
+          event.target.name
+          + 
+          " :: "
+          +
+          event.target.id
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+          " mouseout, distance: " +  event.distance, // data
+          event.target.uuid + " ajh." // message
+  
+         );
 
         ((event.target as Mesh).material as MeshMatcapMaterial)
         .color.set( (event.target as any).defaultColor);
@@ -287,6 +359,26 @@ function init() {
        
        selectedMeshes.push((event.target as Mesh)); 
 
+       InformationWindow.updateAllFields(
+
+        event.target.name
+          + 
+          " :: "
+          +
+          event.target.id
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+
+        " mousedown, distance: " 
+        +
+        event.distance, // data
+
+        event.target.uuid + " ajh." // message
+
+       );
+
         // document.querySelector('#title .log')!.innerHTML =
         //   '<span style="color: #0000ff">' +
         //   event.target.name +
@@ -295,12 +387,30 @@ function init() {
         //   '</span><br/>';
 
         ((event.target as Mesh).material as MeshMatcapMaterial).color.set(0x0000ff);
+
       });
       
       // mouseup
       child.addEventListener('mouseup', (event : any) => {
 
         console.log(event);
+
+        InformationWindow.updateAllFields(
+
+          event.target.name
+          + 
+          " :: "
+          +
+          event.target.id
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+          " mouseup, distance: " +  event.distance, // data
+          event.target.uuid + " ajh." // message
+  
+         );
+
 
         let foundIndex = selectedMeshes.findIndex(
           item => item == (event.target as Mesh)
@@ -318,6 +428,24 @@ function init() {
       child.addEventListener('click', (event : any) => {
         console.log(event);
         event.stopPropagation();
+
+        InformationWindow.updateAllFields(
+
+          event.target.name
+          + 
+          " :: "
+          +
+          event.target.id
+          + 
+          " :: "
+          +
+          selectedMeshes.length, // title
+
+          " click/mouse up, distance: " +  event.distance, // data
+
+          event.target.uuid + " ajh." // message
+  
+         );
 
         // document.querySelector('#title .log')!.innerHTML =
         //   event.target.name +
@@ -354,12 +482,14 @@ function init() {
 
   }
 
+  //scene.add(InformationWindow.);
+
 
   // ===== 🪄 HELPERS =====
   {
-    axesHelper = new AxesHelper(4);
-    axesHelper.visible = false;
-    scene.add(axesHelper);
+    // axesHelper = new AxesHelper(4);
+    // axesHelper.visible = false;
+    // scene.add(axesHelper);
 
     // pointLightHelper = new PointLightHelper(pointLight, undefined, "orange");
     // pointLightHelper.visible = false;
@@ -460,38 +590,43 @@ function init() {
 
 function animate() {
 
-  requestAnimationFrame(animate);
+  
 
   stats.update();
   
-  // selectedMeshes.forEach(
+  selectedMeshes.forEach(
 
-  //   function (item) {
+    function (item) {
 
-  //     if (animation.enabled && animation.play) {
+      if (animation.enabled && animation.play) {
 
-  //       animations.rotate(item, clock, Math.PI / 3);
-  //       animations.bounce(item, clock, 1, 0.5, 0.5);
+        rotate(item, clock, Math.PI / 3);
+        bounce(item, clock, 1, 0.5, 0.5);
 
-  //     }
+      }
 
      
 
-  //   }
+    }
 
-  // );
+  );
 
-  // if (resizeRendererToDisplaySize(renderer)) {
+  
+
+   if (resizeRendererToDisplaySize(renderer)) {
 
      const canvas = renderer.domElement;
-     camera.aspect = canvas.clientWidth / canvas.clientHeight;
-     camera.updateProjectionMatrix();
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
 
-  // }
+   }
 
-  cameraControls.update();
+      cameraControls.update();
 
-  interactionManager.update();
+     interactionManager.update();
 
-  renderer.render(scene, camera);
+      renderer.render(scene, camera);
+
+      requestAnimationFrame(animate);
+
 }

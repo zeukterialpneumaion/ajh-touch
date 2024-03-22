@@ -207,7 +207,7 @@ function init() {
         = new AjhDisplayItem();
 
         element.body.position.z = 0.75 + ((rowIndex - ( rows / 2 ) )*1.5);
-        element.body.position.x = 0.75 + ((colIndex - ( cols / 2 ) )*1.5);
+        element.body.position.x = 1 + ((colIndex - ( cols / 2 ) )*2);
         
 
         arrayOfItems.push( element.body );

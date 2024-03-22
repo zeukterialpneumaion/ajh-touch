@@ -465,21 +465,32 @@ function animate() {
   requestAnimationFrame(animate);
 
   stats.update();
-  selectedMeshes
   
-selectedMeshes.forEach( function (item) {
-  if (animation.enabled && animation.play) {
-    animations.rotate(item, clock, Math.PI / 3);
-    animations.bounce(item, clock, 1, 0.5, 0.5);
-  }
+  selectedMeshes.forEach(
+
+    function (item) {
+
+      if (animation.enabled && animation.play) {
+
+        animations.rotate(item, clock, Math.PI / 3);
+        animations.bounce(item, clock, 1, 0.5, 0.5);
+
+      }
+
+     
+
+    }
+
+  );
 
   if (resizeRendererToDisplaySize(renderer)) {
+
     const canvas = renderer.domElement;
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
+
   }
-}
-);
+
   cameraControls.update();
 
   interactionManager.update();

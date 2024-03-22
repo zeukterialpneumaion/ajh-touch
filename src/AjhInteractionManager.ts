@@ -297,7 +297,7 @@ export class InteractionManager {
         passive: true,
       });
 
-    this.treatTouchEventsAsMouseEvents = false;
+    this.treatTouchEventsAsMouseEvents = true;
 
   }
 

@@ -232,7 +232,7 @@ export class InteractionManager {
     //this.interactiveObjects = [];
     this.closestObjects[0] = null;
 
-   // domElement.addEventListener('click', this.onMouseClick);
+    domElement.addEventListener('click', this.onMouseClick);
 
     if (this.supportsPointerEvents) {
 
@@ -259,21 +259,21 @@ export class InteractionManager {
 
     if (this.bindEventsOnBodyElement) {
 
-     domElement.ownerDocument.addEventListener(
-       'mousemove',
-       this.onDocumentMouseMove
-     );
+      domElement.ownerDocument.addEventListener(
+        'mousemove',
+        this.onDocumentMouseMove
+      );
 
     } else {
 
-     domElement.addEventListener(
-       'mousemove', 
-       this.onDocumentMouseMove
-     );
+      domElement.addEventListener(
+        'mousemove', 
+        this.onDocumentMouseMove
+      );
 
     }
 
-   domElement.addEventListener('mousedown', this.onMouseDown);
+    domElement.addEventListener('mousedown', this.onMouseDown);
     domElement.addEventListener('mouseup', this.onMouseUp);
 
     domElement.addEventListener(
@@ -297,7 +297,7 @@ export class InteractionManager {
         passive: true,
       });
 
-    this.treatTouchEventsAsMouseEvents = false;
+    this.treatTouchEventsAsMouseEvents = true;
 
   }
 
@@ -361,8 +361,8 @@ export class InteractionManager {
 
     };
 
-   this.domElement.removeEventListener('mousedown', this.onMouseDown);
-   this.domElement.removeEventListener('mouseup', this.onMouseUp);
+    this.domElement.removeEventListener('mousedown', this.onMouseDown);
+    this.domElement.removeEventListener('mouseup', this.onMouseUp);
     this.domElement.removeEventListener('touchstart', this.onTouchStart);
     this.domElement.removeEventListener('touchmove', this.onTouchMove);
     this.domElement.removeEventListener('touchend', this.onTouchEnd);
@@ -835,9 +835,9 @@ export class InteractionManager {
  * */
 // =============================================================== //
 
-    onTouchStart 
-    = 
-    (touchEvent: TouchEvent) => {
+  onTouchStart 
+  = 
+  (touchEvent: TouchEvent) => {
 
       if (touchEvent.touches.length > 0) {
 
@@ -880,11 +880,11 @@ export class InteractionManager {
 
             );
 
-          }
-      
         }
+      
+    }
 
-    };
+  };
 
 // =============================================================== //
 /** 
@@ -1039,19 +1039,19 @@ export class InteractionManager {
  * */
 // =============================================================== //
 
-    mapPositionToPoint 
-    = 
-    (
-      point: Vector2, 
-      x: number, 
-      y: number
-    ) => {
+  mapPositionToPoint 
+  = 
+  (
+    point: Vector2, 
+    x: number, 
+    y: number
+  ) => {
 
-      const rect = this.renderer.domElement.getBoundingClientRect();
+    const rect = this.renderer.domElement.getBoundingClientRect();
 
-      point.x = ((x - rect.left) / rect.width) * 2 - 1;
-      point.y = -((y - rect.top) / rect.height) * 2 + 1;
+    point.x = ((x - rect.left) / rect.width) * 2 - 1;
+    point.y = -((y - rect.top) / rect.height) * 2 + 1;
 
-    };
+  };
 
 }

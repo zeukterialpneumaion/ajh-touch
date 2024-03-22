@@ -27,6 +27,7 @@ import { InteractionManager } from "./AjhInteractionManager";
 import { toggleFullScreen } from "./helpers/fullscreen";
 import { resizeRendererToDisplaySize } from "./helpers/responsiveness";
 
+import { bounce, rotate } from "./helpers/animations";
 import "./style.css";
 
 const CANVAS_ID = "scene";
@@ -241,7 +242,7 @@ function init() {
           + 
           " :: "
           +
-          selectedMeshes.length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
           " mouseenter, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
@@ -273,7 +274,7 @@ function init() {
           + 
           " :: "
           +
-          selectedMeshes.length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
           " mouseleave, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
@@ -304,7 +305,7 @@ function init() {
         + 
         " :: "
         +
-        selectedMeshes.length, // title
+        interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
         " mouseover, distance: " +  event.distance, // data
         event.target.uuid + " ajh." // message
 
@@ -338,7 +339,7 @@ function init() {
           + 
           " :: "
           +
-          selectedMeshes.length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
           " mouseout, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
@@ -368,7 +369,7 @@ function init() {
           + 
           " :: "
           +
-          selectedMeshes.length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
 
         " mousedown, distance: " 
         +
@@ -404,7 +405,7 @@ function init() {
           + 
           " :: "
           +
-          selectedMeshes.length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
           " mouseup, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
@@ -438,7 +439,7 @@ function init() {
           + 
           " :: "
           +
-          selectedMeshes.length, // title
+          interactionManager.returnArrayOfCurrentlySelectedItems().length, // title
 
           " click/mouse up, distance: " +  event.distance, // data
 
@@ -593,22 +594,22 @@ function animate() {
 
   stats.update();
   
-  // selectedMeshes.forEach(
+  interactionManager.returnArrayOfCurrentlySelectedItems().forEach(
 
-  //   function (item) {
+    function (item) {
 
-  //     if (animation.enabled && animation.play) {
+      if (animation.enabled && animation.play) {
 
-  //       rotate(item, clock, Math.PI / 3);
-  //       bounce(item, clock, 1, 0.5, 0.5);
+        rotate(item.target, clock, Math.PI / 3);
+        bounce(item.target, clock, 1, 0.5, 0.5);
 
-  //     }
+      }
 
      
 
-  //   }
+    }
 
-  // );
+  );
 
   
 

@@ -1054,4 +1054,22 @@ export class InteractionManager {
 
   };
 
+  returnArrayOfCurrentlySelectedItems() : Array<InteractiveObject> {
+
+    let foundItems : Array<InteractiveObject> = new Array<InteractiveObject>();
+    for (let index = 0; index < this.interactiveObjects.length; index++) {
+      
+      const element = this.interactiveObjects[index];
+     
+      if( element.intersected == true ){
+
+        foundItems.push(element);
+
+      }
+      
+    }
+
+    return foundItems;
+  }
+
 }

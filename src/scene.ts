@@ -483,9 +483,9 @@ function animate() {
 
   // if (resizeRendererToDisplaySize(renderer)) {
 
-  //   const canvas = renderer.domElement;
-  //   camera.aspect = canvas.clientWidth / canvas.clientHeight;
-  //   camera.updateProjectionMatrix();
+     const canvas = renderer.domElement;
+     camera.aspect = canvas.clientWidth / canvas.clientHeight;
+     camera.updateProjectionMatrix();
 
   // }
 

@@ -43,7 +43,7 @@ export class InteractiveEvent {
   intersected: boolean = false;
   id : number = 0;
 
-  constructor(type: string, originalEvent: Event | null = null) {
+  constructor(id: number, type: string, originalEvent: Event | null = null) {
 
     this.cancelBubble = false;
     this.type = type;
@@ -297,7 +297,7 @@ export class InteractionManager {
         passive: true,
       });
 
-    this.treatTouchEventsAsMouseEvents = true;
+    this.treatTouchEventsAsMouseEvents = false;
 
   }
 
@@ -511,14 +511,14 @@ export class InteractionManager {
 
       if (this.closestObjects[0]) {
 
-        const eventOutClosest = new InteractiveEvent('mouseout');
+        const eventOutClosest = new InteractiveEvent(0,'mouseout');
         this.dispatch(this.closestObjects[0], eventOutClosest);
 
       }
 
       if (newClosestObject) {
 
-        const eventOverClosest = new InteractiveEvent('mouseover');
+        const eventOverClosest = new InteractiveEvent(0,'mouseover');
         this.dispatch(newClosestObject, eventOverClosest);
 
       }
@@ -536,7 +536,7 @@ export class InteractionManager {
 
           if (!eventLeave) {
 
-            eventLeave = new InteractiveEvent('mouseleave');
+            eventLeave = new InteractiveEvent(0, 'mouseleave');
 
           }
 
@@ -558,7 +558,7 @@ export class InteractionManager {
 
           if (!eventEnter) {
 
-            eventEnter = new InteractiveEvent('mouseenter');
+            eventEnter = new InteractiveEvent(0, 'mouseenter');
 
           }
 
@@ -633,7 +633,7 @@ export class InteractionManager {
 
     );
 
-    const event = new InteractiveEvent('mousemove', mouseEvent);
+    const event = new InteractiveEvent(0, 'mousemove', mouseEvent);
 
     this.interactiveObjects.forEach(
 
@@ -666,7 +666,7 @@ export class InteractionManager {
 
     );
 
-    const event = new InteractiveEvent('pointermove', pointerEvent);
+    const event = new InteractiveEvent(pointerEvent.pointerId, 'pointermove', pointerEvent);
 
     this.interactiveObjects.forEach(
       (object) => {
@@ -710,7 +710,7 @@ export class InteractionManager {
         const event 
         = 
         new InteractiveEvent(
-
+          index,
           this.treatTouchEventsAsMouseEvents ? 'mousemove' : 'touchmove',
           touchEvent
 
@@ -740,7 +740,7 @@ export class InteractionManager {
 
     this.update();
 
-    const event = new InteractiveEvent('click', mouseEvent);
+    const event = new InteractiveEvent(0, 'click', mouseEvent);
 
     this.interactiveObjects.forEach(
 
@@ -776,7 +776,7 @@ export class InteractionManager {
 
     this.update();
 
-    const event = new InteractiveEvent('mousedown', mouseEvent);
+    const event = new InteractiveEvent(0, 'mousedown', mouseEvent);
 
     this.interactiveObjects.forEach(
 
@@ -814,7 +814,7 @@ export class InteractionManager {
 
     this.update();
 
-    const event = new InteractiveEvent('pointerdown', pointerEvent);
+    const event = new InteractiveEvent(pointerEvent.pointerId,'pointerdown', pointerEvent);
 
     this.interactiveObjects.forEach(
 
@@ -863,7 +863,7 @@ export class InteractionManager {
             const event 
             = 
             new InteractiveEvent(
-
+              index,
               this.treatTouchEventsAsMouseEvents ? 'mousedown' : 'touchstart',
               touchEvent
 
@@ -899,7 +899,7 @@ export class InteractionManager {
   = 
   (mouseEvent: MouseEvent) => {
 
-    const event = new InteractiveEvent('mouseup', mouseEvent);
+    const event = new InteractiveEvent(0,'mouseup', mouseEvent);
 
     this.interactiveObjects.forEach(
 
@@ -923,7 +923,7 @@ export class InteractionManager {
   = 
   (pointerEvent: PointerEvent) => {
 
-    const event = new InteractiveEvent('pointerup', pointerEvent);
+    const event = new InteractiveEvent(pointerEvent.pointerId, 'pointerup', pointerEvent);
 
     this.interactiveObjects.forEach(
 
@@ -969,7 +969,7 @@ export class InteractionManager {
         const event 
         = 
         new InteractiveEvent(
-
+          index,
           this.treatTouchEventsAsMouseEvents ? 'mouseup' : 'touchend',
           touchEvent
 

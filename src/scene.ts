@@ -310,7 +310,7 @@ function init() {
       });
 
       // pointerover
-      child.addEventListener('pointerover', (event : any) => {
+      child.addEventListener('touchstart', (event : any) => {
         console.log(event);
         event.stopPropagation();
         //event.preventDefault();
@@ -320,9 +320,10 @@ function init() {
         // );
 
         // selectedMeshes.splice(foundIndex,1);
+        
         selectedMeshes.push((event.target as Mesh));
         
-        interactionManager.add(child);
+       // interactionManager.add(child);
 
         
        InformationWindow.updateAllFields(
@@ -340,7 +341,7 @@ function init() {
         " :: "
         +
         selectedMeshes.length, // title
-        " pointerover, distance: " +  event.distance, // data
+        " touchstart, distance: " +  event.distance, // data
         event.target.uuid + " ajh." // message
 
        );
@@ -407,7 +408,7 @@ function init() {
           event.stopPropagation();
 
           //  event.preventDefault();
-          interactionManager.add(child);
+         // interactionManager.add(child);
 
           // let foundIndex 
           // = selectedMeshes.findIndex(
@@ -490,7 +491,7 @@ function init() {
         );
 
         selectedMeshes.splice(foundIndex,1);
-        
+
       });
       
       // click

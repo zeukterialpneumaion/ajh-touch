@@ -231,11 +231,11 @@ function init() {
       child.addEventListener('mouseenter', (event : any ) => {
         console.log(event);
 
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
-        selectedMeshes.splice(foundIndex,1);
-        selectedMeshes.push((event.target as Mesh)); 
+        // let foundIndex = selectedMeshes.findIndex(
+        //   item => item == (event.target as Mesh)
+        // );
+        // selectedMeshes.splice(foundIndex,1);
+      //  selectedMeshes.push((event.target as Mesh)); 
 
         event.stopPropagation();
 

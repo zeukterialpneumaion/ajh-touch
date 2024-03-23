@@ -228,7 +228,7 @@ function init() {
     groupOfMeshes.children.forEach((child) => {
 
       // pointerenter
-      child.addEventListener('mouseenter', (event : any ) => {
+      child.addEventListener('pointerenter', (event : any ) => {
         console.log(event);
 
         // let foundIndex = selectedMeshes.findIndex(
@@ -255,7 +255,7 @@ function init() {
           +
           selectedMeshes.length,
           
-          " mouseenter, distance: " +  event.distance, // data
+          " pointerenter, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
          );
@@ -273,7 +273,7 @@ function init() {
       });
 
       // pointerleave
-      child.addEventListener('mouseleave', (event : any) => {
+      child.addEventListener('pointerleave', (event : any) => {
         console.log(event);
 
         let foundIndex = selectedMeshes.findIndex(
@@ -296,7 +296,7 @@ function init() {
           " :: "
           +
           selectedMeshes.length, // title
-          " mouseleave, distance: " +  event.distance, // data
+          " pointerleave, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
          );
@@ -310,7 +310,7 @@ function init() {
       });
 
       // pointerover
-      child.addEventListener('mouseover', (event : any) => {
+      child.addEventListener('pointerover', (event : any) => {
         console.log(event);
         event.stopPropagation();
         //event.preventDefault();
@@ -320,7 +320,9 @@ function init() {
         // );
 
         // selectedMeshes.splice(foundIndex,1);
-        selectedMeshes.push((event.target as Mesh)); 
+        selectedMeshes.push((event.target as Mesh));
+        
+        interactionManager.add(child);
 
         
        InformationWindow.updateAllFields(
@@ -338,7 +340,7 @@ function init() {
         " :: "
         +
         selectedMeshes.length, // title
-        " mouseover, distance: " +  event.distance, // data
+        " pointerover, distance: " +  event.distance, // data
         event.target.uuid + " ajh." // message
 
        );
@@ -407,14 +409,14 @@ function init() {
           //  event.preventDefault();
           interactionManager.add(child);
 
-          // let foundIndex 
-          // = selectedMeshes.findIndex(
-          //   item => item == (event.target as Mesh)
-          // );
+          let foundIndex 
+          = selectedMeshes.findIndex(
+            item => item == (event.target as Mesh)
+          );
 
-          // selectedMeshes.splice(foundIndex,1);
+          selectedMeshes.splice(foundIndex,1);
 
-         // selectedMeshes.push((event.target as Mesh)); 
+         selectedMeshes.push((event.target as Mesh)); 
 
           InformationWindow.updateAllFields(
 
@@ -489,39 +491,39 @@ function init() {
       });
       
       // click
-      child.addEventListener('click', (event : any) => {
-        console.log(event);
-        event.stopPropagation();
+      // child.addEventListener('click', (event : any) => {
+      //   console.log(event);
+      //   event.stopPropagation();
 
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
+      //   let foundIndex = selectedMeshes.findIndex(
+      //     item => item == (event.target as Mesh)
+      //   );
 
-        selectedMeshes.splice(foundIndex,1);
+      //   selectedMeshes.splice(foundIndex,1);
 
-        InformationWindow.updateAllFields(
+      //   InformationWindow.updateAllFields(
 
-          event.target.name
-          + 
-          " :: "
-          +
-          event.target.id
-          + 
-          " :: "
-          +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length
-          + 
-          " :: "
-          +
-          selectedMeshes.length, // title
+      //     event.target.name
+      //     + 
+      //     " :: "
+      //     +
+      //     event.target.id
+      //     + 
+      //     " :: "
+      //     +
+      //     interactionManager.returnArrayOfCurrentlySelectedItems().length
+      //     + 
+      //     " :: "
+      //     +
+      //     selectedMeshes.length, // title
 
-          " click/pointer up, distance: " +  event.distance, // data
+      //     " click/pointer up, distance: " +  event.distance, // data
 
-          event.target.uuid + " ajh." // message
+      //     event.target.uuid + " ajh." // message
   
-         );
+      //    );
 
-      });
+      // });
 
       interactionManager.add(child);
     });

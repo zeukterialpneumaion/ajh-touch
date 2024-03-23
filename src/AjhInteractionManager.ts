@@ -48,7 +48,7 @@ export class InteractiveEvent {
     this.cancelBubble = false;
     this.type = type;
     this.originalEvent = originalEvent;
-    this.id = 0;
+    this.id = id;
 
   }
 

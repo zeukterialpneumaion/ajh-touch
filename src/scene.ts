@@ -235,7 +235,7 @@ function init() {
         //   item => item == (event.target as Mesh)
         // );
         // selectedMeshes.splice(foundIndex,1);
-      //  selectedMeshes.push((event.target as Mesh)); 
+        selectedMeshes.push((event.target as Mesh)); 
 
         event.stopPropagation();
 

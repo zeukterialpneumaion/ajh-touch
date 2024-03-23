@@ -273,7 +273,7 @@ function init() {
       });
 
       // pointerleave
-      child.addEventListener('pointerleave', (event : any) => {
+      child.addEventListener('mouseleave', (event : any) => {
         console.log(event);
 
         let foundIndex = selectedMeshes.findIndex(
@@ -296,7 +296,7 @@ function init() {
           " :: "
           +
           selectedMeshes.length, // title
-          " pointerleave, distance: " +  event.distance, // data
+          " mouseleave, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
          );
@@ -310,7 +310,7 @@ function init() {
       });
 
       // pointerover
-      child.addEventListener('touchstart', (event : any) => {
+      child.addEventListener('pointerover', (event : any) => {
         console.log(event);
         event.stopPropagation();
         //event.preventDefault();
@@ -341,7 +341,7 @@ function init() {
         " :: "
         +
         selectedMeshes.length, // title
-        " touchstart, distance: " +  event.distance, // data
+        " pointerover, distance: " +  event.distance, // data
         event.target.uuid + " ajh." // message
 
        );

@@ -243,11 +243,21 @@ export class InteractionManager {
           this.onDocumentPointerMove
         );
 
+        domElement.ownerDocument.addEventListener(
+          'pointerover',
+          this.onDocumentPointerOver
+        );
+
       } else {
 
         domElement.addEventListener(
           'pointermove', 
           this.onDocumentPointerMove
+        );
+
+        domElement.addEventListener(
+          'pointerover',
+          this.onDocumentPointerOver
         );
 
       }
@@ -280,24 +290,24 @@ export class InteractionManager {
       'touchstart', 
       this.onTouchStart, 
       {
-        passive: true,
+        passive: false,
       });
 
     domElement.addEventListener(
       'touchmove', 
       this.onTouchMove, 
       {
-        passive: true,
+        passive: false,
       });
 
     domElement.addEventListener(
       'touchend', 
       this.onTouchEnd, 
       {
-        passive: true,
+        passive: false,
       });
 
-    this.treatTouchEventsAsMouseEvents = true;
+    this.treatTouchEventsAsMouseEvents = false;
 
   }
 
@@ -671,13 +681,54 @@ export class InteractionManager {
     this.interactiveObjects.forEach(
       (object) => {
 
-        this.dispatch(object, event);
+        if (object.intersected) {
+
+          this.dispatch(object, event);
+
+        }
 
       }
 
     );
 
   };
+  
+// =============================================================== //
+/** 
+ * onDocumentPointerMove :: function 
+ * */
+// =============================================================== //
+
+onDocumentPointerOver 
+= 
+(pointerEvent: PointerEvent) => {
+  // event.preventDefault();
+ 
+  this.mapPositionToPoint(
+
+    this.mouseInstances[pointerEvent.pointerId],
+    pointerEvent.clientX,
+    pointerEvent.clientY
+
+  );
+
+  const event = new InteractiveEvent(pointerEvent.pointerId, 'pointermove', pointerEvent);
+
+  this.interactiveObjects.forEach(
+    (object) => {
+
+      if (object.intersected) {
+
+        this.dispatch(object, event);
+
+      }
+
+    }
+
+  );
+
+};
+
 
 // =============================================================== //
 /** 

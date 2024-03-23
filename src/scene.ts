@@ -227,11 +227,14 @@ function init() {
 
     groupOfMeshes.children.forEach((child) => {
 
-      // mouseenter
+      // pointerenter
       child.addEventListener('mouseenter', (event : any ) => {
         console.log(event);
 
-        
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+        selectedMeshes.splice(foundIndex,1);
         selectedMeshes.push((event.target as Mesh)); 
 
         event.stopPropagation();
@@ -260,7 +263,7 @@ function init() {
         // document.querySelector('#title .log')!.innerHTML =
         //   '<span style="color: #ff8800">' +
         //   event.target.name +
-        //   ' – mouseenter, distance: ' +
+        //   ' – pointerenter, distance: ' +
         //   event.distance +
         //   '</span><br/>';
 
@@ -269,7 +272,7 @@ function init() {
         document.body.style.cursor = 'pointer';
       });
 
-      // mouseleave
+      // pointerleave
       child.addEventListener('mouseleave', (event : any) => {
         console.log(event);
 
@@ -306,7 +309,7 @@ function init() {
 
       });
 
-      // mouseover
+      // pointerover
       child.addEventListener('mouseover', (event : any) => {
         console.log(event);
         event.stopPropagation();
@@ -343,7 +346,7 @@ function init() {
         // document.querySelector('#title .log')!.innerHTML =
         //   '<span style="color: #ff0000">' +
         //   event.target.name +
-        //   ' – mouseover, distance: ' +
+        //   ' – pointerover, distance: ' +
         //   event.distance +
         //   '</span><br/>';
 
@@ -354,8 +357,8 @@ function init() {
 
       });
 
-      // mouseout
-      child.addEventListener('mouseout', (event : any) => {
+      // pointerout
+      child.addEventListener('pointerout', (event : any) => {
         console.log(event);
 
         let foundIndex = selectedMeshes.findIndex(
@@ -380,7 +383,7 @@ function init() {
           +
           selectedMeshes.length, // title
 
-          " mouseout, distance: " +  event.distance, // data
+          " pointerout, distance: " +  event.distance, // data
 
           event.target.uuid + " ajh." // message
   
@@ -392,9 +395,9 @@ function init() {
         document.body.style.cursor = 'default';
       });
 
-      // mousedown
+      // pointerdown
       child.addEventListener(
-        'mousedown', 
+        'pointerdown', 
         (event : any) => {
 
           console.log(event);
@@ -429,7 +432,7 @@ function init() {
             +
             selectedMeshes.length, // title
 
-          " mousedown, distance: " 
+          " pointerdown, distance: " 
           +
           event.distance, // data
 
@@ -444,8 +447,8 @@ function init() {
 
     );
       
-      // mouseup
-      child.addEventListener('mouseup', (event : any) => {
+      // pointerup
+      child.addEventListener('pointerup', (event : any) => {
 
         console.log(event);
 
@@ -472,7 +475,7 @@ function init() {
           +
           selectedMeshes.length, // title
 
-          " mouseup, distance: " +  event.distance, // data
+          " pointerup, distance: " +  event.distance, // data
 
           event.target.uuid + " ajh." // message
   
@@ -512,7 +515,7 @@ function init() {
           +
           selectedMeshes.length, // title
 
-          " click/mouse up, distance: " +  event.distance, // data
+          " click/pointer up, distance: " +  event.distance, // data
 
           event.target.uuid + " ajh." // message
   

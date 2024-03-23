@@ -363,11 +363,11 @@ function init() {
       child.addEventListener('pointerout', (event : any) => {
         console.log(event);
 
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
+        // let foundIndex = selectedMeshes.findIndex(
+        //   item => item == (event.target as Mesh)
+        // );
 
-        selectedMeshes.splice(foundIndex,1);
+        // selectedMeshes.splice(foundIndex,1);
 
         InformationWindow.updateAllFields(
 
@@ -409,12 +409,12 @@ function init() {
           //  event.preventDefault();
           interactionManager.add(child);
 
-          let foundIndex 
-          = selectedMeshes.findIndex(
-            item => item == (event.target as Mesh)
-          );
+          // let foundIndex 
+          // = selectedMeshes.findIndex(
+          //   item => item == (event.target as Mesh)
+          // );
 
-          selectedMeshes.splice(foundIndex,1);
+          // selectedMeshes.splice(foundIndex,1);
 
          selectedMeshes.push((event.target as Mesh)); 
 
@@ -677,11 +677,19 @@ function animate() {
   //   }
 
   // );
+  if (resizeRendererToDisplaySize(renderer)) {
 
+    const canvas = renderer.domElement;
+   camera.aspect = canvas.clientWidth / canvas.clientHeight;
+   camera.updateProjectionMatrix();
+
+  }
+
+     cameraControls.update();
 
     selectedMeshes.forEach(
 
-      function (item : Mesh) {
+      function (item : Mesh, index:number) {
 
         if (animation.enabled && animation.play) {
 
@@ -691,23 +699,16 @@ function animate() {
         }
 
       
+        interactionManager.update(index);
 
       }
 
     );
   
 
-   if (resizeRendererToDisplaySize(renderer)) {
+  
 
-     const canvas = renderer.domElement;
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
-
-   }
-
-      cameraControls.update();
-
-     interactionManager.update();
+    
 
       renderer.render(scene, camera);
 

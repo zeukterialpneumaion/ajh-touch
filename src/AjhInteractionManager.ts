@@ -188,7 +188,7 @@ export class InteractionManager {
 
         }
 
-        this.update();
+        this.update(0);
 
       };
 
@@ -476,7 +476,7 @@ export class InteractionManager {
 
   update 
   = 
-  () => {
+  (id:number) => {
 
     for (let index = 0; index < this.raycasterInstances.length; index++) {
 
@@ -494,7 +494,7 @@ export class InteractionManager {
 
     this.interactiveObjects.forEach((object) => {
 
-      if (object.target) this.checkIntersection(object,0);
+      if (object.target) this.checkIntersection(object,id);
 
     });
 
@@ -511,14 +511,14 @@ export class InteractionManager {
 
       if (this.closestObjects[0]) {
 
-        const eventOutClosest = new InteractiveEvent(0,'mouseout');
+        const eventOutClosest = new InteractiveEvent(id,'mouseout');
         this.dispatch(this.closestObjects[0], eventOutClosest);
 
       }
 
       if (newClosestObject) {
 
-        const eventOverClosest = new InteractiveEvent(0,'mouseover');
+        const eventOverClosest = new InteractiveEvent(id,'mouseover');
         this.dispatch(newClosestObject, eventOverClosest);
 
       }
@@ -536,7 +536,7 @@ export class InteractionManager {
 
           if (!eventLeave) {
 
-            eventLeave = new InteractiveEvent(0, 'mouseleave');
+            eventLeave = new InteractiveEvent(id, 'mouseleave');
 
           }
 
@@ -558,7 +558,7 @@ export class InteractionManager {
 
           if (!eventEnter) {
 
-            eventEnter = new InteractiveEvent(0, 'mouseenter');
+            eventEnter = new InteractiveEvent(id, 'mouseenter');
 
           }
 
@@ -738,7 +738,7 @@ export class InteractionManager {
   = 
   (mouseEvent: MouseEvent) => {
 
-    this.update();
+    this.update(0);
 
     const event = new InteractiveEvent(0, 'click', mouseEvent);
 
@@ -774,7 +774,7 @@ export class InteractionManager {
       mouseEvent.clientY
     );
 
-    this.update();
+    this.update(0);
 
     const event = new InteractiveEvent(0, 'mousedown', mouseEvent);
 
@@ -812,7 +812,7 @@ export class InteractionManager {
 
     );
 
-    this.update();
+    this.update(pointerEvent.pointerId);
 
     const event = new InteractiveEvent(pointerEvent.pointerId,'pointerdown', pointerEvent);
 
@@ -858,7 +858,7 @@ export class InteractionManager {
 
             );
             
-            this.update();
+            this.update(index);
             
             const event 
             = 
@@ -905,7 +905,12 @@ export class InteractionManager {
 
       (object) => {
 
-        this.dispatch(object, event);
+        
+        if (object.intersected) {
+
+          this.dispatch(object, event);
+
+        }
 
       }
 
@@ -929,7 +934,11 @@ export class InteractionManager {
 
       (object) => {
 
-        this.dispatch(object, event);
+        if (object.intersected) {
+
+          this.dispatch(object, event);
+
+        }
 
       }
 
@@ -964,7 +973,7 @@ export class InteractionManager {
 
         );
 
-        this.update();
+        this.update(index);
 
         const event 
         = 

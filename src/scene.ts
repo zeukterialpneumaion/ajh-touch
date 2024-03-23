@@ -454,11 +454,7 @@ function init() {
 
         console.log(event);
 
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
-
-        selectedMeshes.splice(foundIndex,1);
+       
         
 
         InformationWindow.updateAllFields(
@@ -488,6 +484,13 @@ function init() {
         } else {
           ((event.target as Mesh).material as MeshMatcapMaterial).color.set(new Color( +(event.target as Mesh).name ));
         }
+
+        let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+
+        selectedMeshes.splice(foundIndex,1);
+        
       });
       
       // click

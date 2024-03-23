@@ -227,15 +227,21 @@ function init() {
 
     groupOfMeshes.children.forEach((child) => {
 
+      ///////////////////////////////////////////////////////
+      
+      interactionManager.add(child);
+      
+      ///////////////////////////////////////////////////////
+
       // pointerenter
-      child.addEventListener('pointerenter', (event : any ) => {
+      child.addEventListener('mouseenter', (event : any ) => {
         console.log(event);
 
         // let foundIndex = selectedMeshes.findIndex(
         //   item => item == (event.target as Mesh)
         // );
         // selectedMeshes.splice(foundIndex,1);
-      //  selectedMeshes.push((event.target as Mesh)); 
+       selectedMeshes.push((event.target as Mesh)); 
 
         event.stopPropagation();
 
@@ -255,7 +261,7 @@ function init() {
           +
           selectedMeshes.length,
           
-          " pointerenter, distance: " +  event.distance, // data
+          " mouserenter, distance: " +  event.distance, // data
           event.target.uuid + " ajh." // message
   
          );
@@ -271,6 +277,8 @@ function init() {
 
         document.body.style.cursor = 'pointer';
       });
+
+      ///////////////////////////////////////////////////////
 
       // pointerleave
       child.addEventListener('mouseleave', (event : any) => {
@@ -309,42 +317,45 @@ function init() {
 
       });
 
+    
+      ///////////////////////////////////////////////////////
+
       // pointerover
-      child.addEventListener('pointerover', (event : any) => {
-        console.log(event);
-        event.stopPropagation();
-        //event.preventDefault();
+      // child.addEventListener('pointerover', (event : any) => {
+      //   console.log(event);
+      //   event.stopPropagation();
+      //   //event.preventDefault();
 
-        // let foundIndex = selectedMeshes.findIndex(
-        //   item => item == (event.target as Mesh)
-        // );
+      //   // let foundIndex = selectedMeshes.findIndex(
+      //   //   item => item == (event.target as Mesh)
+      //   // );
 
-        // selectedMeshes.splice(foundIndex,1);
+      //   // selectedMeshes.splice(foundIndex,1);
         
-        selectedMeshes.push((event.target as Mesh));
+      //   selectedMeshes.push((event.target as Mesh));
         
-       // interactionManager.add(child);
+      //  // interactionManager.add(child);
 
         
-       InformationWindow.updateAllFields(
+      //  InformationWindow.updateAllFields(
 
-        event.target.name
-        + 
-        " :: "
-        +
-        event.target.id
-        + 
-        " :: "
-        +
-        interactionManager.returnArrayOfCurrentlySelectedItems().length
-        + 
-        " :: "
-        +
-        selectedMeshes.length, // title
-        " pointerover, distance: " +  event.distance, // data
-        event.target.uuid + " ajh." // message
+      //   event.target.name
+      //   + 
+      //   " :: "
+      //   +
+      //   event.target.id
+      //   + 
+      //   " :: "
+      //   +
+      //   interactionManager.returnArrayOfCurrentlySelectedItems().length
+      //   + 
+      //   " :: "
+      //   +
+      //   selectedMeshes.length, // title
+      //   " pointerover, distance: " +  event.distance, // data
+      //   event.target.uuid + " ajh." // message
 
-       );
+      //  );
 
         // document.querySelector('#title .log')!.innerHTML =
         //   '<span style="color: #ff0000">' +
@@ -353,50 +364,53 @@ function init() {
         //   event.distance +
         //   '</span><br/>';
 
-        ((event.target as Mesh).material as MeshMatcapMaterial)
-        .color.set(0xff0000);
+      //   ((event.target as Mesh).material as MeshMatcapMaterial)
+      //   .color.set(0xff0000);
 
-        document.body.style.cursor = 'pointer';
+      //   document.body.style.cursor = 'pointer';
 
-      });
+      // });
+
+
+      ///////////////////////////////////////////////////////
 
       // pointerout
-      child.addEventListener('pointerout', (event : any) => {
-        console.log(event);
+      // child.addEventListener('pointerout', (event : any) => {
+      //   console.log(event);
 
-        // let foundIndex = selectedMeshes.findIndex(
-        //   item => item == (event.target as Mesh)
-        // );
+      //   // let foundIndex = selectedMeshes.findIndex(
+      //   //   item => item == (event.target as Mesh)
+      //   // );
 
-        // selectedMeshes.splice(foundIndex,1);
+      //   // selectedMeshes.splice(foundIndex,1);
 
-        InformationWindow.updateAllFields(
+      //   InformationWindow.updateAllFields(
 
-          event.target.name
-          + 
-          " :: "
-          +
-          event.target.id
-          + 
-          " :: "
-          +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length
-          + 
-          " :: "
-          +
-          selectedMeshes.length, // title
+      //     event.target.name
+      //     + 
+      //     " :: "
+      //     +
+      //     event.target.id
+      //     + 
+      //     " :: "
+      //     +
+      //     interactionManager.returnArrayOfCurrentlySelectedItems().length
+      //     + 
+      //     " :: "
+      //     +
+      //     selectedMeshes.length, // title
 
-          " pointerout, distance: " +  event.distance, // data
+      //     " pointerout, distance: " +  event.distance, // data
 
-          event.target.uuid + " ajh." // message
+      //     event.target.uuid + " ajh." // message
   
-         );
+      //    );
 
-        ((event.target as Mesh).material as MeshMatcapMaterial)
-        .color.set( (event.target as any).defaultColor);
+      //   ((event.target as Mesh).material as MeshMatcapMaterial)
+      //   .color.set( (event.target as any).defaultColor);
 
-        document.body.style.cursor = 'default';
-      });
+      //   document.body.style.cursor = 'default';
+      // });
 
       // pointerdown
       child.addEventListener(
@@ -456,7 +470,11 @@ function init() {
         console.log(event);
 
        
-        
+         let foundIndex = selectedMeshes.findIndex(
+          item => item == (event.target as Mesh)
+        );
+
+        selectedMeshes.splice(foundIndex,1);
 
         InformationWindow.updateAllFields(
 
@@ -480,17 +498,13 @@ function init() {
   
          );
 
-        if (event.intersected) {
-          ((event.target as Mesh).material as MeshMatcapMaterial).color.set(0xff0000);
-        } else {
+        // if (event.intersected) {
+        //   ((event.target as Mesh).material as MeshMatcapMaterial).color.set(0xff0000);
+        // } else {
           ((event.target as Mesh).material as MeshMatcapMaterial).color.set(new Color( +(event.target as Mesh).name ));
-        }
+        //}
 
-        let foundIndex = selectedMeshes.findIndex(
-          item => item == (event.target as Mesh)
-        );
-
-        selectedMeshes.splice(foundIndex,1);
+       
 
       });
       
@@ -529,7 +543,7 @@ function init() {
 
       // });
 
-      interactionManager.add(child);
+      
     });
 
 

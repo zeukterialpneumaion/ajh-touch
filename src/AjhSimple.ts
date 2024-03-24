@@ -24,7 +24,6 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
 import AjhDisplayItem from "./AjhDisplay/AjhDisplayItem";
 import AjhInformationWindow from "./AjhInformationWindow";
-import { InteractionManager } from "./AjhInteractionManager";
 import { toggleFullScreen } from "./helpers/fullscreen";
 import { resizeRendererToDisplaySize } from "./helpers/responsiveness";
 
@@ -57,7 +56,6 @@ let InformationWindow:AjhInformationWindow = new AjhInformationWindow();
 
 const animation = { enabled: true, play: true };
 
-let interactionManager : InteractionManager;
 
 let circle : Mesh;
 
@@ -115,13 +113,6 @@ function init() {
     );
     camera.position.set(0, 13, 0);
 
-    interactionManager 
-    = 
-    new InteractionManager(
-      renderer,
-      camera,
-      renderer.domElement
-    );
 
   }
 
@@ -247,7 +238,7 @@ function init() {
     //circle.receiveShadow = true;
 
     circle.position.y = 1;
-    scene.add(circle);
+   // scene.add(circle);
 
 
 

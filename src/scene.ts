@@ -23,7 +23,6 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Stats from "three/examples/jsm/libs/stats.module";
 import AjhDisplayItem from "./AjhDisplay/AjhDisplayItem";
 import AjhInformationWindow from "./AjhInformationWindow";
-import { InteractionManager } from "./AjhInteractionManager";
 import { toggleFullScreen } from "./helpers/fullscreen";
 import { resizeRendererToDisplaySize } from "./helpers/responsiveness";
 
@@ -56,7 +55,6 @@ let InformationWindow:AjhInformationWindow = new AjhInformationWindow();
 
 const animation = { enabled: true, play: true };
 
-let interactionManager : InteractionManager;
 let rows : number = 5;
 let cols : number = 5;
 
@@ -83,11 +81,6 @@ function init() {
     );
     camera.position.set(0, 13, 0);
 
-    interactionManager = new InteractionManager(
-      renderer,
-      camera,
-      renderer.domElement
-    );
 
 
   }
@@ -229,7 +222,7 @@ function init() {
 
       ///////////////////////////////////////////////////////
 
-      interactionManager.add(child);
+     // interactionManager.add(child);
       
       ///////////////////////////////////////////////////////
 
@@ -254,8 +247,8 @@ function init() {
           event.target.id
           + 
           " :: "
-          +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          // +
+          // interactionManager.returnArrayOfCurrentlySelectedItems().length
           + 
           " :: "
           +
@@ -298,8 +291,8 @@ function init() {
           event.target.id
           + 
           " :: "
-          +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          // +
+          // interactionManager.returnArrayOfCurrentlySelectedItems().length
           + 
           " :: "
           +
@@ -442,8 +435,8 @@ function init() {
             event.target.id
             + 
             " :: "
-            +
-            interactionManager.returnArrayOfCurrentlySelectedItems().length
+            // +
+            // interactionManager.returnArrayOfCurrentlySelectedItems().length
             + 
             " :: "
             +
@@ -485,8 +478,8 @@ function init() {
           event.target.id
           + 
           " :: "
-          +
-          interactionManager.returnArrayOfCurrentlySelectedItems().length
+          // +
+          // interactionManager.returnArrayOfCurrentlySelectedItems().length
           + 
           " :: "
           +
@@ -717,7 +710,7 @@ function animate() {
         }
 
       
-        interactionManager.update(index);
+       // interactionManager.update(index);
 
       }
 

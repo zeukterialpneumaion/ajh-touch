@@ -204,7 +204,7 @@ function init() {
       for (let colIndex = 0; colIndex < cols; colIndex++) {
 
         const element 
-        = new AjhDisplayItem();
+        = new AjhDisplayItem(rowIndex+"_"+colIndex);
 
         element.body.position.z = 0.75 + ((rowIndex - ( rows / 2 ) )*1.5);
         element.body.position.x = 1 + ((colIndex - ( cols / 2 ) )*2);
@@ -228,7 +228,7 @@ function init() {
     groupOfMeshes.children.forEach((child) => {
 
       ///////////////////////////////////////////////////////
-      
+
       interactionManager.add(child);
       
       ///////////////////////////////////////////////////////

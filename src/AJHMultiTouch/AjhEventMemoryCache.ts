@@ -7,7 +7,7 @@ export default class AjhEventMemoryCache {
         // an array of the object to be checked for event interaions
         // containing ::
         // an array of memory events registered by id
-        EventMemoryCache : Array<any> = new Array<any>();
+        EventMemoryCache : Array<PointerEvent> = new Array<PointerEvent>();
 
         logEvents : AjhLog = new AjhLog();
 
@@ -20,16 +20,19 @@ export default class AjhEventMemoryCache {
 
     // ================================================================== //
     
-        pushEventIntoCache(ev : any) {
+        pushEventIntoCache(ev : PointerEvent) {
 
             // Save this event in the target's cache
-            this.EventMemoryCache.push(ev);
+            if(this.getPointerEventById(ev.pointerId) == null){
+                 this.EventMemoryCache.push(ev);
+            }
+           
         
         }
 
     // ================================================================== //
     
-        removeEventFromCache(ev : any) {
+        removeEventFromCache(ev : PointerEvent) {
 
             try {
 
@@ -41,7 +44,7 @@ export default class AjhEventMemoryCache {
 
                 );
 
-                this.EventMemoryCache!.splice(index, 1);
+                this.EventMemoryCache.splice(index, 1);
 
             } 
             catch (e) {
@@ -53,5 +56,44 @@ export default class AjhEventMemoryCache {
             }
 
         }
+
+    // ================================================================== //
+    
+        getPointerEventById( 
+            itemId : any
+        ): PointerEvent  | null {
+
+        // Return the cache for this event's target element
+    
+            let foundEventMemoryCache = null;
+        
+            for (
+                let index = 0; 
+                index < this.EventMemoryCache.length; 
+                index++
+            ) {
+        
+                const element = this.EventMemoryCache[index];
+        
+                if( itemId == element.pointerId ){
+        
+                    foundEventMemoryCache =  element
+                
+                } 
+                
+            }
+        
+            if(foundEventMemoryCache == null){
+                
+                this.logEvents.log("Error with cache handling", itemId);
+            }
+        
+            return foundEventMemoryCache;
+        
+        }
+
+    // ================================================================== //
+
+
 
 }

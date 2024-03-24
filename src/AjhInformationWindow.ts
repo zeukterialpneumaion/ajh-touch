@@ -59,7 +59,7 @@ export default class AjhInformationWindow {
         this._InformationWindowInstance 
         = document.createElement('div');
         this._InformationWindowInstance.style.userSelect =  "none";//.disable();
-
+        this._InformationWindowInstance.style.pointerEvents =  "none";
         this._InformationWindowInstance.style.padding = "0px";
         this._InformationWindowInstance.style.height = "max-content";//"100" + "px";
         this._InformationWindowInstance.style.width = "max-content";

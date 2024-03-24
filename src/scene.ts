@@ -700,7 +700,7 @@ function animate() {
 
     selectedMeshes.forEach(
 
-      function (item : Mesh, index:number) {
+      function (item : Mesh ) {
 
         if (animation.enabled && animation.play) {
 
